@@ -1,7 +1,7 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-from Petstagram.main_app.validator import only_letters_validator
+from Petstagram.main_app.validator import only_letters_validator, validate_file_max_size
 
 
 class Profile(models.Model):
@@ -75,3 +75,39 @@ class Pet(models.Model):
 
     def __str__(self):
         return self.name
+
+''''
+Pet's Photo
+The user must provide the following information when uploading a pet's photo in their profile:
+•	Photo - the maximum size of the photo can be 5MB
+•	Tagged pets - the user should tag at least one of their pets. There is no limit in the number of tagged pets
+The user may provide the following information when uploading a pet's photo in their profile:
+•	Description - a user can write any description about the picture, with no limit of words/chars
+Other:
+•	Date and time of publication - when a picture is created (only), the date and time of publication are automatically generated.
+•	Likes - each picture has 0 likes at the beginning, and no one can change it. The number of likes a picture can collect is unlimited.
+
+'''
+
+
+class PetPhoto(models.Model):
+    photo = models.ImageField(
+        validators=(
+            validate_file_max_size,
+        )
+    )
+    tagged_pets = models.ManyToManyField(Pet)
+    description = models.TextField(
+        null=True,
+        blank=True
+    )
+    publication_date = models.DateTimeField(
+        auto_now_add=True,
+    )
+    likes = models.IntegerField(
+        default=0
+    )
+
+    def __str__(self):
+        result = [x.name for x in self.tagged_pets.all()]
+        return ' | '.join(result)
