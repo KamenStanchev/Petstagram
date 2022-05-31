@@ -1,3 +1,5 @@
+{% load profiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,23 +23,28 @@
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    {% has_profile as hp %}
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="{% url 'home_page' %}">Home</a>
             </li>
+            {% if hp %}
             <li class="nav-item">
-                <a class="nav-link" href="#">Dashboard</a>
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
             </li>
+                {% if not hide_additional_nav_item %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Add Pet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Add Photo</a>
+                    </li>
+                {% endif %}
             <li class="nav-item">
-                <a class="nav-link" href="#">Add Pet</a>
+            <a class="nav-link" href="{% url 'profile_details' %}">Profile</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Add Photo</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
-            </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
