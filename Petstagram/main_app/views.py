@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from Petstagram.main_app.models import Profile
+from Petstagram.main_app.models import Profile, PetPhoto
 
 
 def get_profile():
@@ -18,16 +18,21 @@ def home_page(request):
 
 
 def dashboard(request):
-    profile = get_profile()
-    pets = profile.pet_set.all()
+    # profile = get_profile()
+    # pets = profile.pet_set.all()
+    pet_photos = PetPhoto.objects.all()
     context = {
-        'pets': pets,
+        'pet_photos': pet_photos,
     }
     return render(request, 'dashboard.html', context)
 
 
 def photo_details(request, pk):
-    return render(request, 'photo_details.html')
+    pet_photo = PetPhoto.objects.get(id=pk)
+    contex = {
+        'pet_photo': pet_photo,
+    }
+    return render(request, 'photo_details.html', contex)
 
 
 def profile_details(request):

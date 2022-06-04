@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.validators import MinLengthValidator
 from django.db import models
 
@@ -69,6 +71,10 @@ class Pet(models.Model):
         Profile,
         on_delete=models.CASCADE
     )
+
+    @property
+    def age(self):
+        return datetime.datetime.now().year - self.date_of_birth.year
 
     class Meta:
         unique_together = ('user_profile', 'name')
