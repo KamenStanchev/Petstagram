@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from Petstagram.main_app.models import Profile, PetPhoto
 
@@ -37,3 +37,10 @@ def photo_details(request, pk):
 
 def profile_details(request):
     return render(request, 'profile_details.html')
+
+
+def like_photo(request, pk):
+    pet_photo = PetPhoto.objects.get(id=pk)
+    pet_photo.likes += 1
+    pet_photo.save()
+    return redirect('photo_details', pk)
