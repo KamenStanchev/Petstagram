@@ -36,7 +36,21 @@ def photo_details(request, pk):
 
 
 def profile_details(request):
-    return render(request, 'profile_details.html')
+    profile = get_profile()
+
+    profile_images = (PetPhoto.objects.filter(tagged_pets__user_profile=profile).distinct())
+    total_images = len(profile_images)
+    total_likes = sum(p_pic.likes for p_pic in profile_images)
+    context = {
+        'profile': profile,
+        'total_images': total_images,
+        'total_likes': total_likes,
+    }
+    return render(request, 'profile_details.html', context)
+
+
+def unauthorized(request):
+    return render(request, '401_error.html')
 
 
 def like_photo(request, pk):

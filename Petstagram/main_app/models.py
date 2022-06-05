@@ -48,14 +48,6 @@ class Profile(models.Model):
         return self.first_name
 
 
-# Pet
-# The user must provide the following information when adding a pet in their profile:
-# •	Name - it should consist of maximum 30 characters. All pets' names should be unique for that user.
-# •	Type - the user can choose one of the following: "Cat", "Dog", "Bunny", "Parrot", "Fish", or "Other".
-# The user may provide the following information when adding a pet to their profile:
-# •	Date of birth - pet's day, month, and year of birth.
-
-
 class Pet(models.Model):
     TYPES = [(x, x) for x in ("Cat", "Dog", "Bunny", "Parrot", "Fish", "Other")]
     name = models.CharField(max_length=30)
