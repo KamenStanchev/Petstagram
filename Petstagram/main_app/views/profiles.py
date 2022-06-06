@@ -37,10 +37,10 @@ def create_profile(request):
 def profile_edit(request):
     profile = get_profile()
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, initial=profile)
+        form = EditProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('home_page')
+            return redirect('profile_details')
     else:
         form = EditProfileForm(instance=profile)
 
