@@ -7,7 +7,7 @@ from Petstagram.main_app.views.others import get_profile
 
 def add_photo(request):
     if request.method == 'POST':
-        form = PhotoCreateForm(request.POST)
+        form = PhotoCreateForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home_page')
@@ -25,9 +25,9 @@ def photo_edit(request):
 
 
 def photo_details(request, pk):
-    pet_photo = PetPhoto.objects.get(id=pk)
+    phototo = PetPhoto.objects.get(id=pk)
     contex = {
-        'pet_photo': pet_photo,
+        'phototo': phototo,
     }
     return render(request, 'photo_details.html', contex)
 

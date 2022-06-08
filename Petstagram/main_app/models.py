@@ -81,9 +81,8 @@ class Pet(models.Model):
 class PetPhoto(models.Model):
     photo = models.ImageField(
         'Pet image',
-        validators=(
-            validate_file_max_size,
-        )
+        upload_to='images/',
+
     )
     tagged_pets = models.ManyToManyField(Pet)
     description = models.TextField(
