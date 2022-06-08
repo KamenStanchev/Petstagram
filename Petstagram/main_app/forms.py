@@ -1,6 +1,107 @@
+import form as form
 from django import forms
 
-from Petstagram.main_app.models import Profile
+from Petstagram.main_app.models import Profile, Pet, PetPhoto
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class PetForm(forms.ModelForm):
+    class Meta:
+        model = Pet
+        fields = ('name', 'type', 'date_of_birth')
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Enter pet name',
+                }
+            ),
+            'type': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'date_of_birth': DateInput(
+                attrs={
+                    'class': 'form-control',
+                    'min': '1920-01-01',
+                }),
+        }
+
+
+class EditPetForm(forms.ModelForm):
+    class Meta:
+        model = Pet
+        fields = ('name', 'type', 'date_of_birth')
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Enter pet name',
+                }
+            ),
+            'type': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'date_of_birth': DateInput(
+                attrs={
+                    'class': 'form-control',
+                    'min': '1920-01-01',
+                }),
+        }
+
+
+class PhotoCreateForm(forms.ModelForm):
+    class Meta:
+        model = PetPhoto
+        fields = ('photo', 'description', 'tagged_pets')
+        # widgets = {
+        #     'photo': forms.ImageField(
+        #         attrs={
+        #             'class': 'form-control',
+        #         }
+        #     ),
+        #     'description': forms.Textarea(
+        #         attrs={
+        #             'class': 'form-control',
+        #         }
+        #     ),
+        #     'tagged_pets': forms.CheckboxInput(
+        #         attrs={
+        #             'class': 'form-control'
+        #         }
+        #     )
+        # }
+
+
+class DeletePetForm(forms.ModelForm):
+    class Meta:
+        model = Pet
+        fields = ('name', 'type', 'date_of_birth')
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'disabled': True,
+                }
+            ),
+            'type': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'disabled': True,
+                }
+            ),
+            'date_of_birth': DateInput(
+                attrs={
+                    'class': 'form-control',
+                    'disabled': True,
+                }),
+        }
 
 
 class ProfileForm(forms.ModelForm):
@@ -53,10 +154,10 @@ class EditProfileForm(forms.ModelForm):
                     'placeholder': 'Enter URL',
                 }
             ),
-            'date_of_birth': forms.TextInput(
+            'date_of_birth': DateInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Enter date of birth',
+                    'min': '1920-01-01',
                 }
             ),
             'email': forms.EmailInput(
@@ -65,14 +166,12 @@ class EditProfileForm(forms.ModelForm):
                     'placeholder': 'Enter e-mail',
                 }
             ),
-            # 'gender': forms.TypedChoiceField(
-            #     choices=(('male', 'male'), ('femail', 'femail'), ('Do not show', 'Do not show')),
-            #     initial='Do not show',
-            #     # attrs={
-            #     #     'class': 'form-control',
-            #     #     # 'placeholder': 'Enter your gender',
-            #     # }
-            # ),
+            'gender': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+
             'description': forms.Textarea(
                 attrs={
                     'class': 'form-control',

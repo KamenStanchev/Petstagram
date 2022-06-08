@@ -33,4 +33,18 @@
             </div>
         </div>
     </div>
+        <!-- Pets Information -->
+    <h2 class="text-center">My Pets</h2>
+    <div class="container mb-4">
+        <div class="d-flex justify-content-start mb-5">
+            {% for pet in pets %}
+            <div style="width: 18rem;">
+                <h5>{{ pet.name }}</h5>
+                <p class="mt-2">Age: {{ pet.age }}</p>
+                <a href="{% url 'pet_edit' pet.pk %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'pet_delete' pet.pk %}" class="btn btn-danger">Delete</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

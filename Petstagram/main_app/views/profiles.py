@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from Petstagram.main_app.forms import ProfileForm, EditProfileForm
-from Petstagram.main_app.models import PetPhoto
+from Petstagram.main_app.models import PetPhoto, Pet
 from Petstagram.main_app.views.others import get_profile
 
 
@@ -15,6 +15,7 @@ def profile_details(request):
         'profile': profile,
         'total_images': total_images,
         'total_likes': total_likes,
+        'pets': Pet.objects.filter(user_profile=profile.id),
     }
     return render(request, 'profile_details.html', context)
 
@@ -51,5 +52,13 @@ def profile_edit(request):
 
 
 def profile_delete(request):
-    return render(request, 'profile_delete.html')
+    profile = get_profile()
+    if request.method == 'POST':
+        profile.delete()
+        return redirect('home_page')
+    context={
+        'full_name': f'{profile.first_name} {profile.last_name}',
+        'picture': profile.picture,
+    }
+    return render(request, 'profile_delete.html', context)
 

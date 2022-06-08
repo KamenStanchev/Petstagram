@@ -22,7 +22,7 @@ urlpatterns = [
 
     path('pet/add/', add_pet, name='add_pet'),
     path('pet/delete/<str:pk>/', pet_delete, name='pet_delete'),
-    path('pet/edit/<str:pk>/', pet_edit, name='pet_edit'),
+    path('pet/edit/<int:pk>/', pet_edit, name='pet_edit'),
 
     path('unauthorized/', unauthorized, name='unauthorized')
 ]
