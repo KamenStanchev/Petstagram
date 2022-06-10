@@ -60,23 +60,13 @@ class PhotoCreateForm(forms.ModelForm):
     class Meta:
         model = PetPhoto
         fields = ('photo', 'description', 'tagged_pets')
-        # widgets = {
-        #     'photo': forms.ImageField(
-        #         attrs={
-        #             'class': 'form-control',
-        #         }
-        #     ),
-        #     'description': forms.Textarea(
-        #         attrs={
-        #             'class': 'form-control',
-        #         }
-        #     ),
-        #     'tagged_pets': forms.CheckboxInput(
-        #         attrs={
-        #             'class': 'form-control'
-        #         }
-        #     )
-        # }
+
+
+class PhotoEditForm(forms.ModelForm):
+    class Meta:
+        model = PetPhoto
+        fields = ('description', 'tagged_pets')
+
 
 
 class DeletePetForm(forms.ModelForm):
