@@ -1,5 +1,6 @@
 import form as form
 from django import forms
+from django.forms import fields
 
 from Petstagram.main_app.models import Profile, Pet, PetPhoto
 
@@ -66,7 +67,34 @@ class PhotoEditForm(forms.ModelForm):
     class Meta:
         model = PetPhoto
         fields = ('description', 'tagged_pets')
+        widgets = {
+            'description': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'disabled': False,
+                    'rows': 3
+                }
+            )
+        }
 
+
+class PhotoDeleteForm(forms.ModelForm):
+    class Meta:
+        model = PetPhoto
+        fields = ('description', 'tagged_pets')
+        widgets = {
+            'description': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'disabled': True,
+                }
+            ),
+            'tagged_pets': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'disabled': True,
+                }
+            )}
 
 
 class DeletePetForm(forms.ModelForm):

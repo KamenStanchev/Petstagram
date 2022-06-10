@@ -6,7 +6,6 @@ from django.db import models
 from Petstagram.main_app.validator import only_letters_validator, validate_file_max_size
 
 
-
 class Profile(models.Model):
     first_name = models.CharField(
         max_length=30,
@@ -87,7 +86,7 @@ class PetPhoto(models.Model):
     tagged_pets = models.ManyToManyField(Pet)
     description = models.TextField(
         null=True,
-        blank=True
+        blank=True,
     )
     publication_date = models.DateTimeField(
         auto_now_add=True,
